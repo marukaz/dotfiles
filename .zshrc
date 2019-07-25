@@ -6,7 +6,7 @@ alias ls='ls -h --color=always'
 alias ll='ls -l'      
 alias la='ls -A'
 alias l='ls -CF'
-alias reload='source ~/dotfiles/.zshrc'
+alias reload='source ~/repos/dotfiles/.zshrc'
 
 # vim
 alias vi='vim'
@@ -22,7 +22,10 @@ alias dc='docker-compose'
 
 # git
 alias g='git'
+alias ga='git add'
 alias gb='git branch'
+alias gc='git commit'
+alias gcm='git commit -m'
 alias gl='git log --pretty=format:"%C(yellow)%h%Creset %C(magenta)%ci%Creset%n%C(cyan)%an <%ae>%Creset%n%B"'
 alias glp='git log -p'
 alias glg='git log --graph --pretty=format:"%C(yellow)%h%Creset %C(magenta)%ci%Creset%n%C(cyan)%an <%ae>%Creset%n%B"'
@@ -45,7 +48,7 @@ setopt inc_append_history
 setopt share_history
 
 # The following lines were added by compinstall
-zstyle :compinstall filename '~/dotfiles/.zshrc'
+zstyle :compinstall filename '~/repos/dotfiles/.zshrc'
 
 autoload -Uz compinit
 compinit

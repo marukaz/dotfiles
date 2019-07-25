@@ -1,10 +1,10 @@
 #!/bin/sh
 
-DOTPATH=~/.dotfiles
+DOTPATH=~/repos/dotfiles
 
 for f in .??*
 do
     [ "$f" = ".git" ] && continue
 
-    ln -sv "$DOTPATH/$f" "$HOME/$f"
+    ln -sfv "$DOTPATH/$f" "$HOME/$f"
 done
