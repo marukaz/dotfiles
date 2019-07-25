@@ -40,8 +40,12 @@ SAVEHIST=100000
 setopt appendhistory autocd beep nomatch
 bindkey -e
 
+# share history
+setopt inc_append_history
+setopt share_history
+
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/marukaz/.zshrc'
+zstyle :compinstall filename '~/dotfiles/.zshrc'
 
 autoload -Uz compinit
 compinit
