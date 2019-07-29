@@ -7,6 +7,7 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 alias reload='source ~/repos/dotfiles/.zshrc'
+alias jupyter_nike='ssh -L 8516:localhost:8516 athena -t ssh -L 8516:localhost:8516 nike'
 
 # vim
 alias vi='vim'
