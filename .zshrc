@@ -1,8 +1,13 @@
-# LS_COLORS
-eval `dircolors -b`
+case `uname` in
+  Darwin)
+    alias ls='ls -G'
+  ;;
+  Linux)
+    alias ls='ls -h --color=auto'
+  ;;
+esac
 
 # ALIAS
-alias ls='ls -h --color=always'
 alias ll='ls -l'      
 alias la='ls -A'
 alias l='ls -CF'
