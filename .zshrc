@@ -1,3 +1,5 @@
+export LANG="ja_JP.UTF-8"
+
 case `uname` in
   Darwin)
     alias ls='ls -G'
