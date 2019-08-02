@@ -55,6 +55,11 @@ bindkey -e
 setopt inc_append_history
 setopt share_history
 
+# load environment specific settings
+if [ -f ~/.zshlocal ]; then
+	source ~/.zshlocal
+fi
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/repos/dotfiles/.zshrc'
 
