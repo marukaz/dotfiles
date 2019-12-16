@@ -1,11 +1,6 @@
 ### https://raw.github.com/github/gitignore/499ae899e7b54e701e878759f73d9092302fd07a/Global/VisualStudioCode.gitignore
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
+.vscode/
 
 ### https://raw.github.com/github/gitignore/499ae899e7b54e701e878759f73d9092302fd07a/Global/macOS.gitignore
 
