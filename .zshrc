@@ -32,12 +32,16 @@ alias ic='ibmcloud'
 alias k=kubectl
 function qblogin (){oc login -u kubeadmin -p $1 --insecure-skip-tls-verify=true api.${2}.cp.fyre.ibm.com:6443 -n zen}
 
-## IBM
-alias seer_install='mvn -s maven/settings.xml clean install -DskipTests -Dartifactory.user=$ARTIFACTORY_USER -Dartifactory.apikey=$ARTIFACTORY_APIKEY'
-
 ## vim
 alias vi='vim'
 export EDITOR=vim
+
+# for go lang
+if [ -x "`which go`" ]; then
+  export GOPATH=$HOME/go
+  export PATH="$GOPATH/bin:$PATH"
+fi
+
 
 # load environment specific settings
 if [ -f ~/.zshlocal ]; then
