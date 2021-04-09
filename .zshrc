@@ -37,6 +37,7 @@ alias seer_install='mvn -s maven/settings.xml clean install -DskipTests -Dartifa
 
 ## vim
 alias vi='vim'
+export EDITOR=vim
 
 # load environment specific settings
 if [ -f ~/.zshlocal ]; then
