@@ -36,6 +36,11 @@ function qblogin (){oc login -u kubeadmin -p $1 --insecure-skip-tls-verify=true 
 alias vi='vim'
 export EDITOR=vim
 
+# completions
+
+## kubernetes
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
 # for go lang
 if [ -x "`which go`" ]; then
   export GOPATH=$HOME/go
