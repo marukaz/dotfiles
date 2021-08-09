@@ -45,6 +45,17 @@ alias ic='ibmcloud'
 alias k=kubectl
 function qblogin (){oc login -u kubeadmin -p $1 --insecure-skip-tls-verify=true api.${2}.cp.fyre.ibm.com:6443 -n zen}
 
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+
+zle -N ghq-fzf
+bindkey '^]' ghq-fzf
 ## vim
 alias vi='vim'
 export EDITOR=vim
