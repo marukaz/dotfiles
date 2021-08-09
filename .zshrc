@@ -42,7 +42,13 @@ fi
 alias reload='source ~/dotfiles/.zshrc'
 alias jupyter_nike='ssh -L 8516:localhost:8516 athena -t ssh -L 8516:localhost:8516 nike'
 alias ic='ibmcloud'
+
+## kubernetes
 alias k=kubectl
+alias kgp='kubectl get po'
+alias kgds='kubectl get deploy,sts'
+alias kdes='kubectl describe'
+alias kdel='kubectl delete'
 function qblogin (){oc login -u kubeadmin -p $1 --insecure-skip-tls-verify=true api.${2}.cp.fyre.ibm.com:6443 -n zen}
 
 function ghq-fzf() {
