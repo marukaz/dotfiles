@@ -72,9 +72,8 @@ if [ -f ~/.zshlocal ]; then
         source ~/.zshlocal
 fi
 
-# load fzf bindings
-
-source ~/.zsh_fzf
+# load fzf completion and key bindings
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -87,3 +86,4 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
