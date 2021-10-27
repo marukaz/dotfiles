@@ -72,8 +72,20 @@ if [ -f ~/.zshlocal ]; then
         source ~/.zshlocal
 fi
 
-# load fzf completion and key bindings
+# fzf
+
+## load fzf completion and key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+## custom bindings
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
