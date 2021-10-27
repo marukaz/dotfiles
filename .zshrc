@@ -51,17 +51,6 @@ alias kdes='kubectl describe'
 alias kdel='kubectl delete'
 function qblogin (){oc login -u kubeadmin -p $1 --insecure-skip-tls-verify=true api.${2}.cp.fyre.ibm.com:6443 -n zen}
 
-function ghq-fzf() {
-  local src=$(ghq list | fzf --preview "bat --color=always --style=header,grid --line-range :80 $(ghq root)/{}/README.*")
-  if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
-    zle accept-line
-  fi
-  zle -R -c
-}
-
-zle -N ghq-fzf
-bindkey '^]' ghq-fzf
 ## vim
 alias vi='vim'
 export EDITOR=vim
@@ -82,6 +71,10 @@ fi
 if [ -f ~/.zshlocal ]; then
         source ~/.zshlocal
 fi
+
+# load fzf bindings
+
+source ~/.zsh_fzf
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
