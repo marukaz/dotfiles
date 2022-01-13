@@ -101,3 +101,15 @@ eval "$(pyenv init -)"
 
 export PATH="$HOME/.poetry/bin:$PATH"
 
+# node 16 to default
+
+export PATH="/usr/local/opt/node@16/bin:$PATH"
+
+# Java version swirch
+
+jdk() {
+        version=$1
+        export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
+        java -version
+ }
+ 

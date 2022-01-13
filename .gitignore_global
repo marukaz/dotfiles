@@ -1,4 +1,11 @@
-#
+## Manual
+
+.vscode/launch.json
+.groovylintrc.json
+
+## Scala metals
+
+.metals/
 
 ## Java for Vscode
 
