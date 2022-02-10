@@ -31,6 +31,19 @@ echo "Install packages ..."
 export HOMEBREW_BUNDLE_FILE="~/dotfiles/Brewfile"
 brew bundle install
 
+# Git setup
+
+if [ ! `git config user.name` > /dev/null 2>&1 ]; then
+  echo "Setup git with private username and email? (y/N): "
+  if read -q; then
+    git config --global user.name "Kazuki Matsumaru"
+    git config --global user.email marukaz.jh@gmail.com
+  fi
+fi
+
+# fzf setup
+$(brew --prefix)/opt/fzf/install
+
 # Install prezto for zsh
 if [ ! -d ~/.zprezto ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
