@@ -112,4 +112,9 @@ jdk() {
         export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
         java -version
  }
+
+export JAVA_HOME=$(/usr/libexec/java_home -v"1.8")
  
+# Postgres
+
+export PGDATA=/usr/local/var/postgres
