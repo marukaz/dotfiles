@@ -113,8 +113,11 @@ jdk() {
         java -version
  }
 
-export JAVA_HOME=$(/usr/libexec/java_home -v"1.8")
  
 # Postgres
 
 export PGDATA=/usr/local/var/postgres
+
+# GitHub CLI
+
+eval "$(gh completion -s zsh)"

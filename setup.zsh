@@ -41,6 +41,10 @@ if [ ! `git config user.name` > /dev/null 2>&1 ]; then
   fi
 fi
 
+# GitHub Cli setup
+
+gh extension install kawarimidoll/gh-q
+
 # fzf setup
 $(brew --prefix)/opt/fzf/install
 
