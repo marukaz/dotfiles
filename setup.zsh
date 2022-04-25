@@ -33,6 +33,8 @@ brew bundle install
 
 # Git setup
 
+git config --global core.editor "vim"
+
 if [ ! `git config user.name` > /dev/null 2>&1 ]; then
   echo "Setup git with private username and email? (y/N): "
   if read -q; then

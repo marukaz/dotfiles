@@ -21,6 +21,9 @@
       },
       "kaos/shell": {
         "revision": "2789b3b7f83dc53eb0e4922ac4ca10f5a8fa5837"
+      },
+      "homebrew/cask": {
+        "revision": "6175cafa650eb0a8549525ced17f2b8a0fae398a"
       }
     },
     "brew": {
@@ -1676,6 +1679,26 @@
         "version": "2.0.0",
         "bottle": false
       }
+    },
+    "cask": {
+      "raycast": {
+        "version": "1.28.0",
+        "options": {
+          "full_name": "raycast"
+        }
+      },
+      "temurin": {
+        "version": "17.0.2,8",
+        "options": {
+          "full_name": "temurin"
+        }
+      },
+      "temurin8": {
+        "version": "8,322,06",
+        "options": {
+          "full_name": "temurin8"
+        }
+      }
     }
   },
   "system": {
@@ -1701,6 +1724,14 @@
         "CLT": "12.5.0.22.9",
         "Xcode": "12.5.1",
         "macOS": "11.6"
+      },
+      "monterey": {
+        "HOMEBREW_VERSION": "3.3.14",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "f16b7eb762a1f052c11ebba242a21543fe54db1c",
+        "CLT": "13.2.0.0.1.1638488800",
+        "Xcode": "13.2.1",
+        "macOS": "12.1"
       }
     }
   }
