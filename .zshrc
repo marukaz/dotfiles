@@ -54,6 +54,7 @@ alias kdel='kubectl delete'
 alias vi='vim'
 export EDITOR=vim
 
+
 # completions
 
 ## kubernetes
@@ -64,7 +65,6 @@ if [ -x "`which go`" ]; then
   export GOPATH=$HOME/go
   export PATH="$GOPATH/bin:$PATH"
 fi
-
 
 # load environment specific settings
 if [ -f ~/.zshlocal ]; then
@@ -120,4 +120,5 @@ export PGDATA=/usr/local/var/postgres
 # GitHub CLI
 
 eval "$(gh completion -s zsh)"
-eval "$(pyenv init -)"
+
+export PATH="$HOME/.poetry/bin:$PATH"

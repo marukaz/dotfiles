@@ -1,8 +1,36 @@
 #!/bin/zsh
 
+set -euo pipefail
+
 DOTPATH=~/dotfiles
 
-if type "apt" > /dev/null 2>&1; then
+function is_ubuntu() {
+  if [ "$(uname)" = 'Linux' ]; then
+    if [ -e /etc/lsb-release ]; then
+      return 0
+    fi
+  fi
+  return 1 
+}
+
+function is_mac() {
+  if [ "$(uname)" = 'Darwin' ]; then
+    return 0
+  fi
+  return 1
+}
+
+echo "Setting up dotfiles ..."
+
+if ! is_ubuntu && ! is_mac; then
+  echo "Not supported OS"
+  exit 1
+fi
+
+echo "Installing packages ..."
+
+if is_ubuntu; then
+  echo "Installing packages for Ubuntu ..." 
   sudo apt install build-essential procps curl file git
   if [ ! `type "xsel"` > /dev/null 2>&1 ]; then
     # Install xsel for tmux copy mode
@@ -10,10 +38,16 @@ if type "apt" > /dev/null 2>&1; then
   fi
 fi
 
-if [ ! `type "brew"` > /dev/null 2>&1 ]; then
+if ! type "brew" > /dev/null 2>&1; then
   echo "Installing Homebrew ..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  if [ "$(uname)" == 'Linux'* ]; then
+  # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if is_mac; then
+    echo "Setup brew for Mac ..."
+    # Add PATH for Mac
+    (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+  if [ "$(uname)" = 'Linux' ]; then
     echo "Setup brew for Linux ..."
     # Add PATH for Linux
     # https://docs.brew.sh/Homebrew-on-Linux
@@ -35,7 +69,7 @@ brew bundle install
 
 git config --global core.editor "vim"
 
-if [ ! `git config user.name` > /dev/null 2>&1 ]; then
+if ! `git config user.name` > /dev/null 2>&1; then
   echo "Setup git with private username and email? (y/N): "
   if read -q; then
     git config --global user.name "Kazuki Matsumaru"
@@ -51,7 +85,7 @@ gh extension install kawarimidoll/gh-q
 $(brew --prefix)/opt/fzf/install
 
 # Install prezto for zsh
-if [ ! -d ~/.zprezto ]; then
+if ! [ -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
   setopt EXTENDED_GLOB
   for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
