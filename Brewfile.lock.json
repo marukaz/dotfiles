@@ -8,7 +8,7 @@
         "revision": "ab014794c2dc14b1179de68f960479d898c5bc22"
       },
       "homebrew/core": {
-        "revision": "eaef02f672d011f7915b3f1c6b6bbc6746b5998c"
+        "revision": "d082310378496bf65749903822cc09690887fcbf"
       },
       "hashicorp/tap": {
         "revision": "80b4a8a6982b4ae8e195057d58f6ce3058239bf3"
@@ -1861,6 +1861,18 @@
         "version": "8,372,07",
         "options": {
           "full_name": "temurin8"
+        }
+      },
+      "typora": {
+        "version": "1.6.5",
+        "options": {
+          "full_name": "typora"
+        }
+      },
+      "podman-desktop": {
+        "version": "1.0.1",
+        "options": {
+          "full_name": "podman-desktop"
         }
       }
     }
