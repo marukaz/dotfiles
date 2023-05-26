@@ -122,3 +122,7 @@ export PGDATA=/usr/local/var/postgres
 eval "$(gh completion -s zsh)"
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+# GitHub Copilot
+
+eval "$(github-copilot-cli alias -- "$0")"
