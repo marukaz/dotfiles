@@ -126,3 +126,4 @@ export PATH="$HOME/.poetry/bin:$PATH"
 # GitHub Copilot
 
 eval "$(github-copilot-cli alias -- "$0")"
+export PATH=/Users/marukaz/edirect:${PATH}
