@@ -22,6 +22,27 @@ fi
 # Brewfile for brew bundle
 export HOMEBREW_BUNDLE_FILE="~/dotfiles/Brewfile"
 
+# Use brew under /usr/local/bin on Apple Silicon
+if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
+  echo "Running in Rosetta mode"
+  eval "$(/usr/local/homebrew/bin/brew shellenv)"
+  alias brew='/usr/local/homebrew/bin/brew'
+  
+  # https://pages.github.ibm.com/ai-foundation/watson-nlp-documentation/installation.html#installing-watson-nlp-on-macos-with-m1-chip
+  export JAVA_HOME="/Library/Java/JavaVirtualMachines/ibm-semeru-open-17.jdk/Contents/Home"
+  export JVM_PATH="$(find ${JAVA_HOME} -name libjli.dylib)"
+  export JAVA_TOOL_OPTIONS="-Xnocompressedrefs"
+  export PATH=”${JAVA_HOME}/bin:${PATH}”
+  export LDFLAGS="-L$(brew --prefix xz)/lib"
+  export CPPFLAGS="-I$(brew --prefix xz)/include"
+  export PYENV_ROOT="$HOME/.pyenv"
+  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+
+
 # linuxbrew
 if [[ "$(uname)" = 'Linux'* ]]; then
   export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
@@ -127,3 +148,10 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 eval "$(github-copilot-cli alias -- "$0")"
 export PATH=/Users/marukaz/edirect:${PATH}
+
+wnlp_rosetta() {
+  
+}
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/marukaz/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
