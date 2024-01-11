@@ -1,7 +1,7 @@
 tap "homebrew/bundle"
-tap "homebrew/core"
 tap "homebrew/services"
 tap "kaos/shell"
+brew "awscli"
 brew "bash"
 brew "bat"
 brew "bats-core"
