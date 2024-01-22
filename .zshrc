@@ -22,7 +22,7 @@ fi
 # Brewfile for brew bundle
 export HOMEBREW_BUNDLE_FILE="~/dotfiles/Brewfile"
 
-# Use brew under /usr/local/bin on Apple Silicon
+# Apple Silicon Rosseta mode
 if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
   echo "Running in Rosetta mode"
   eval "$(/usr/local/homebrew/bin/brew shellenv)"
@@ -39,6 +39,12 @@ if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
   command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+fi
+
+# Ruby for Apple Sillicon
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
 fi
 
 
