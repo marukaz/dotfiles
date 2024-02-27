@@ -69,6 +69,7 @@ fi
 alias reload='source ~/dotfiles/.zshrc'
 alias jupyter_nike='ssh -L 8516:localhost:8516 athena -t ssh -L 8516:localhost:8516 nike'
 alias ic='ibmcloud'
+alias venva='source .venv/bin/activate'
 
 ## kubernetes
 alias k=kubectl
@@ -155,9 +156,8 @@ export PATH="$HOME/.poetry/bin:$PATH"
 eval "$(github-copilot-cli alias -- "$0")"
 export PATH=/Users/marukaz/edirect:${PATH}
 
-wnlp_rosetta() {
-  
-}
+
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/marukaz/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
