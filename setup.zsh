@@ -81,6 +81,7 @@ fi
 # GitHub Cli setup
 
 gh extension install kawarimidoll/gh-q
+gh extension install github/gh-copilot
 
 # fzf setup
 $(brew --prefix)/opt/fzf/install
