@@ -20,9 +20,18 @@ function is_mac() {
   return 1
 }
 
+function is_redhat() {
+  if [ "$(uname)" = 'Linux' ]; then
+    if [ -e /etc/redhat-release ]; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
 echo "Setting up dotfiles ..."
 
-if ! is_ubuntu && ! is_mac; then
+if ! is_ubuntu && ! is_mac && ! is_redhat; then
   echo "Not supported OS"
   exit 1
 fi
@@ -51,10 +60,9 @@ if ! type "brew" > /dev/null 2>&1; then
     echo "Setup brew for Linux ..."
     # Add PATH for Linux
     # https://docs.brew.sh/Homebrew-on-Linux
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+    test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv∏)"
+    test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.zshrc
   fi
 fi
 
