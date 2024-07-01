@@ -19,9 +19,6 @@ fi
 
 # Customize to your needs...
 
-# Brewfile for brew bundle
-export HOMEBREW_BUNDLE_FILE="~/dotfiles/Brewfile"
-
 # Apple Silicon Rosseta mode
 if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
   echo "Running in Rosetta mode"

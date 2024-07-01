@@ -70,7 +70,9 @@ echo "Run brew doctor ..."
 brew doctor
 
 echo "Install packages ..."
-export HOMEBREW_BUNDLE_FILE="~/dotfiles/Brewfile"
+export HOMEBREW_BUNDLE_FILE="${PWD}/Brewfile"
+# Add PATH for brew bundle
+(echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
 brew bundle install
 
 # Git setup
