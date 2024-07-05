@@ -63,7 +63,7 @@ if type brew &>/dev/null; then
 fi
 
 # alias
-alias reload='source ~/dotfiles/.zshrc'
+alias reload='source ~/.zshrc'
 alias jupyter_nike='ssh -L 8516:localhost:8516 athena -t ssh -L 8516:localhost:8516 nike'
 alias ic='ibmcloud'
 alias venva='source .venv/bin/activate'
@@ -99,7 +99,7 @@ fi
 # fzf
 
 ## load fzf completion and key bindings
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.fzf.zsh
 
 ## custom bindings
 function ghq-fzf() {
@@ -137,7 +137,6 @@ jdk() {
         java -version
  }
 
- 
 # Postgres
 
 export PGDATA=/usr/local/var/postgres
@@ -147,12 +146,6 @@ export PGDATA=/usr/local/var/postgres
 eval "$(gh completion -s zsh)"
 
 export PATH="$HOME/.poetry/bin:$PATH"
-
-# GitHub Copilot
-
-eval "$(github-copilot-cli alias -- "$0")"
-export PATH=/Users/marukaz/edirect:${PATH}
-
 
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
@@ -173,4 +166,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
