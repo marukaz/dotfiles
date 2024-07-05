@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DOTPATH=~/dotfiles
+DOTPATH=$(cd $(dirname $0); pwd)
 
 function is_ubuntu() {
   if [ "$(uname)" = 'Linux' ]; then
@@ -53,7 +53,7 @@ if ! type "brew" > /dev/null 2>&1; then
   if is_mac; then
     echo "Setup brew for Mac ..."
     # Add PATH for Mac
-    (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+    (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zshrc
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
   if [ "$(uname)" = 'Linux' ]; then
@@ -70,9 +70,7 @@ echo "Run brew doctor ..."
 brew doctor
 
 echo "Install packages ..."
-export HOMEBREW_BUNDLE_FILE="${PWD}/Brewfile"
-# Add PATH for brew bundle
-(echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
+export HOMEBREW_BUNDLE_FILE="$DOTPATH/Brewfile"
 brew bundle install
 
 # Git setup
@@ -114,3 +112,6 @@ done
 
 # Activate .gitignore_global
 git config --global core.excludesFile ~/.gitignore_global
+
+# Add PATH for brew bundle
+(echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
