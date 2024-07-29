@@ -83,7 +83,10 @@ if [ -z "$(git config user.name)" ]; then
   if read -q; then
     git config --global user.name "Kazuki Matsumaru"
     git config --global user.email marukaz.jh@gmail.com
-  fi
+  else
+    echo "Setting up git with private username and email only for this repository ..."
+    git config user.name "Kazuki Matsumaru"
+    git config user.email marukaz.jh@gmail.com
 fi
 
 echo "Installing GitHub CLI extensions ..."
