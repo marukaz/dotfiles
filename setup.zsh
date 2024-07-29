@@ -36,7 +36,7 @@ if ! is_ubuntu && ! is_mac && ! is_redhat; then
   exit 1
 fi
 
-echo "Installing packages ..."
+echo "Installing brew ..."
 
 if is_ubuntu; then
   echo "Installing packages for Ubuntu ..." 
@@ -49,7 +49,7 @@ fi
 
 if ! type "brew" > /dev/null 2>&1; then
   echo "Installing Homebrew ..."
-  # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   if is_mac; then
     echo "Setup brew for Mac ..."
     # Add PATH for Mac
@@ -69,16 +69,16 @@ fi
 echo "Run brew doctor ..."
 brew doctor
 
-echo "Install packages ..."
+echo "Install brew packages ..."
 export HOMEBREW_BUNDLE_FILE="$DOTPATH/Brewfile"
 brew bundle install
 
-# Git setup
+echo "Setting up git ..."
 
 git config --global core.editor "vim"
 git config --global pull.rebase false
 
-if ! `git config user.name` > /dev/null 2>&1; then
+if [ -z "$(git config user.name)" ]; then
   echo "Setup git with private username and email? (y/N): "
   if read -q; then
     git config --global user.name "Kazuki Matsumaru"
@@ -86,15 +86,16 @@ if ! `git config user.name` > /dev/null 2>&1; then
   fi
 fi
 
-# GitHub Cli setup
+echo "Installing GitHub CLI extensions ..."
 
+gh auth login
 gh extension install kawarimidoll/gh-q
 gh extension install github/gh-copilot
 
-# fzf setup
+echo "Setting up fzf ..."
 $(brew --prefix)/opt/fzf/install
 
-# Install prezto for zsh
+echo "Setting up prezto ..."
 if ! [ -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
   setopt EXTENDED_GLOB
@@ -103,6 +104,8 @@ if ! [ -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   done
 fi
 
+echo "Linking dotfiles ..."
+
 for f in .??*
 do
   [ "$f" = ".git" ] && continue
@@ -110,8 +113,8 @@ do
   ln -sfv "$DOTPATH/$f" "$HOME/$f"
 done
 
-# Activate .gitignore_global
+echo "Activating .gitignore_global ..."
 git config --global core.excludesFile ~/.gitignore_global
 
-# Add PATH for brew bundle
+echo "Adding PATH for brew bundle ..."
 (echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
