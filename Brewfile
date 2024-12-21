@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "kaos/shell"
+cask "semeru-jdk-open@21"
 brew "bash"
 brew "bat"
 brew "bats-core"

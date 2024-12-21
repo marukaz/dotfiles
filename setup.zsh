@@ -37,7 +37,6 @@ if ! is_ubuntu && ! is_mac && ! is_redhat; then
 fi
 
 echo "Installing brew ..."
-
 if is_ubuntu; then
   echo "Installing packages for Ubuntu ..." 
   sudo apt install build-essential procps curl file git
@@ -46,7 +45,6 @@ if is_ubuntu; then
     sudo apt install xsel
   fi
 fi
-
 if ! type "brew" > /dev/null 2>&1; then
   echo "Installing Homebrew ..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -73,24 +71,7 @@ echo "Install brew packages ..."
 export HOMEBREW_BUNDLE_FILE="$DOTPATH/Brewfile"
 brew bundle install
 
-echo "Setting up git ..."
-
-git config --global core.editor "vim"
-git config --global pull.rebase false
-
-if [ -z "$(git config user.name)" ]; then
-  echo "Setup git with private username and email? (y/N): "
-  if read -q; then
-    git config --global user.name "Kazuki Matsumaru"
-    git config --global user.email marukaz.jh@gmail.com
-  else
-    echo "Setting up git with private username and email only for this repository ..."
-    git config user.name "Kazuki Matsumaru"
-    git config user.email marukaz.jh@gmail.com
-fi
-
 echo "Installing GitHub CLI extensions ..."
-
 gh auth login
 gh extension install kawarimidoll/gh-q
 gh extension install github/gh-copilot
@@ -108,7 +89,6 @@ if ! [ -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 fi
 
 echo "Linking dotfiles ..."
-
 for f in .??*
 do
   [ "$f" = ".git" ] && continue
@@ -116,8 +96,6 @@ do
   ln -sfv "$DOTPATH/$f" "$HOME/$f"
 done
 
-echo "Activating .gitignore_global ..."
-git config --global core.excludesFile ~/.gitignore_global
 
 echo "Adding PATH for brew bundle ..."
 (echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
