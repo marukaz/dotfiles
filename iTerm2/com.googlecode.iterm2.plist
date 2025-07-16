@@ -417,6 +417,8 @@
 	<true/>
 	<key>PromptOnQuitEvenIfThereAreNoWindows</key>
 	<true/>
+	<key>ShowFullScreenTabBar</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>
