@@ -170,3 +170,13 @@ export SDKMAN_DIR="$HOME/.sdkman"
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/marukaz/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# Added by Antigravity
+export PATH="/Users/marukaz/.antigravity/antigravity/bin:$PATH"
+
+# mise
+
+eval "$(~/.local/bin/mise activate zsh)"
