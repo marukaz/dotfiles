@@ -74,7 +74,6 @@ brew bundle install
 echo "Installing GitHub CLI extensions ..."
 gh auth login
 gh extension install kawarimidoll/gh-q
-gh extension install github/gh-copilot
 
 echo "Setting up fzf ..."
 $(brew --prefix)/opt/fzf/install

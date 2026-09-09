@@ -179,4 +179,4 @@ export PATH="/Users/marukaz/.antigravity/antigravity/bin:$PATH"
 
 # mise
 
-eval "$(~/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
