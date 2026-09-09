@@ -19,6 +19,8 @@ fi
 
 # Customize to your needs...
 
+export VISUAL=vim
+
 # Apple Silicon Rosseta mode
 if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
   echo "Running in Rosetta mode"
@@ -32,10 +34,6 @@ if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
   export PATH=”${JAVA_HOME}/bin:${PATH}”
   export LDFLAGS="-L$(brew --prefix xz)/lib"
   export CPPFLAGS="-I$(brew --prefix xz)/include"
-  export PYENV_ROOT="$HOME/.pyenv"
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
 fi
 
 # Ruby for Apple Sillicon
@@ -119,9 +117,6 @@ bindkey '^]' ghq-fzf
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -167,10 +162,6 @@ unset __conda_setup
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/marukaz/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
@@ -180,3 +171,44 @@ export PATH="/Users/marukaz/.antigravity/antigravity/bin:$PATH"
 # mise
 
 eval "$(mise activate zsh)"
+
+# Git Worktree with new branch
+gwtb() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: gwtb <branch_name>"
+    return 1
+  fi
+
+  local branch_name=$1
+  local repo_name=$(basename "$(git rev-parse --show-toplevel 2>/dev/null)")
+
+  if [[ -z "$repo_name" ]]; then
+    echo "Error: Not a git repository."
+    return 1
+  fi
+
+  local target_path="../${repo_name}+${branch_name}"
+
+  echo "Creating worktree at: $target_path"
+  git worktree add "$target_path" -b "$branch_name"
+
+  if [[ $? -eq 0 ]]; then
+    cd "$target_path"
+  fi
+}
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/marukaz/.lmstudio/bin"
+# End of LM Studio CLI section
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/marukaz/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# pnpm
+export PNPM_HOME="/Users/marukaz/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
