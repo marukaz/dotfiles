@@ -2,7 +2,21 @@
 
 set -euo pipefail
 
-DOTPATH=$(cd $(dirname $0); pwd)
+DOTPATH=${0:A:h}
+
+# Preserve existing settings before replacing them with repository links.
+function link_dotfile() {
+  local source_path=$1 target_path=$2
+  if [[ -L "$target_path" && "${target_path:A}" = "${source_path:A}" ]]; then
+    return 0
+  fi
+  mkdir -p "${target_path:h}"
+  if [[ -e "$target_path" || -L "$target_path" ]]; then
+    local backup_path="${target_path}.backup.$(date +%Y%m%d%H%M%S).$$"
+    mv -v "$target_path" "$backup_path"
+  fi
+  ln -sv "$source_path" "$target_path"
+}
 
 function is_ubuntu() {
   if [ "$(uname)" = 'Linux' ]; then
@@ -40,7 +54,7 @@ echo "Installing brew ..."
 if is_ubuntu; then
   echo "Installing packages for Ubuntu ..." 
   sudo apt install build-essential procps curl file git
-  if [ ! `type "xsel"` > /dev/null 2>&1 ]; then
+  if ! command -v xsel > /dev/null 2>&1; then
     # Install xsel for tmux copy mode
     sudo apt install xsel
   fi
@@ -48,20 +62,16 @@ fi
 if ! type "brew" > /dev/null 2>&1; then
   echo "Installing Homebrew ..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  if is_mac; then
-    echo "Setup brew for Mac ..."
-    # Add PATH for Mac
-    (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zshrc
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
-  if [ "$(uname)" = 'Linux' ]; then
-    echo "Setup brew for Linux ..."
-    # Add PATH for Linux
-    # https://docs.brew.sh/Homebrew-on-Linux
-    test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv∏)"
-    test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.zshrc
-  fi
+fi
+
+if ! command -v brew > /dev/null 2>&1; then
+  for brew_path in /opt/homebrew/bin/brew /usr/local/bin/brew \
+                   "$HOME/.linuxbrew/bin/brew" /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [[ -x "$brew_path" ]]; then
+      eval "$("$brew_path" shellenv)"
+      break
+    fi
+  done
 fi
 
 echo "Run brew doctor ..."
@@ -76,25 +86,26 @@ gh auth login
 gh extension install kawarimidoll/gh-q
 
 echo "Setting up fzf ..."
-$(brew --prefix)/opt/fzf/install
+"$(brew --prefix)/opt/fzf/install"
 
 echo "Setting up prezto ..."
 if ! [ -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
   git clone --recursive https://github.com/marukaz/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-  setopt EXTENDED_GLOB
-  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  done
 fi
-
-echo "Linking dotfiles ..."
-for f in .??*
-do
-  [ "$f" = ".git" ] && continue
-
-  ln -sfv "$DOTPATH/$f" "$HOME/$f"
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  target_path="${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  if [[ ! -e "$target_path" && ! -L "$target_path" ]]; then
+    ln -s "$rcfile" "$target_path"
+  fi
 done
 
-
-echo "Adding PATH for brew bundle ..."
-(echo; echo "export HOMEBREW_BUNDLE_FILE=\"${PWD}/Brewfile\"") >> ~/.zprofile
+echo "Linking dotfiles ..."
+for f in .gitconfig .gitconfig_work .gitignore_global .p10k.zsh .tmux.conf \
+         .zpreztorc .zshrc .vscode/settings.json; do
+  target_path="$HOME/$f"
+  if [[ "$f" = .zshrc || "$f" = .zpreztorc || "$f" = .p10k.zsh ]]; then
+    target_path="${ZDOTDIR:-$HOME}/$f"
+  fi
+  link_dotfile "$DOTPATH/$f" "$target_path"
+done

@@ -12,6 +12,21 @@ fi
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Initialize Homebrew before loading Prezto and its completions.
+if command -v brew > /dev/null 2>&1; then
+  eval "$(brew shellenv)"
+else
+  for brew_path in /opt/homebrew/bin/brew /usr/local/bin/brew \
+                   "$HOME/.linuxbrew/bin/brew" /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [[ -x "$brew_path" ]]; then
+      eval "$("$brew_path" shellenv)"
+      break
+    fi
+  done
+  unset brew_path
+fi
+export HOMEBREW_BUNDLE_FILE="${${(%):-%x}:A:h}/Brewfile"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -21,21 +36,6 @@ fi
 
 export VISUAL=vim
 
-# Apple Silicon Rosseta mode
-if [[ "$(arch)" = 'i386' && "$(uname)" = 'Darwin'* ]]; then
-  echo "Running in Rosetta mode"
-  eval "$(/usr/local/homebrew/bin/brew shellenv)"
-  alias brew='/usr/local/homebrew/bin/brew'
-  
-  # https://pages.github.ibm.com/ai-foundation/watson-nlp-documentation/installation.html#installing-watson-nlp-on-macos-with-m1-chip
-  export JAVA_HOME="/Library/Java/JavaVirtualMachines/ibm-semeru-open-17.jdk/Contents/Home"
-  export JVM_PATH="$(find ${JAVA_HOME} -name libjli.dylib)"
-  export JAVA_TOOL_OPTIONS="-Xnocompressedrefs"
-  export PATH=”${JAVA_HOME}/bin:${PATH}”
-  export LDFLAGS="-L$(brew --prefix xz)/lib"
-  export CPPFLAGS="-I$(brew --prefix xz)/include"
-fi
-
 # Ruby for Apple Sillicon
 if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
   export PATH=/opt/homebrew/opt/ruby/bin:$PATH
@@ -43,16 +43,6 @@ if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
 fi
 
 
-
-# linuxbrew
-if [[ "$(uname)" = 'Linux'* ]]; then
-  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
-  export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
-  export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
-  export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
-  export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
-  export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
-fi
 
 # brew completion
 # https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
