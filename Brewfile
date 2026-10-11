@@ -1,3 +1,5 @@
+tap "anomalyco/tap", trusted: true
+tap "hashicorp/tap", trusted: true
 brew "ansible"
 brew "argocd"
 brew "bash"
@@ -59,6 +61,9 @@ brew "wget"
 brew "yarn"
 brew "yq"
 brew "zsh-syntax-highlighting"
+brew "anomalyco/tap/opencode"
+brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/vault"
 cask "1password-cli"
 cask "alt-tab"
 cask "claude-code@latest"
