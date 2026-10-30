@@ -11,6 +11,9 @@
 `.backup.<日時>.<PID>` を付けて退避します。同じリンクがある場合は変更しません。
 VS Code は `settings.json` のみをリンクし、拡張機能などは保持します。
 
+pyenv はシェル起動時の自動 rehash を無効にしています。Python の実行コマンドを
+追加したあとに shim が更新されない場合は、`pyenv rehash` を実行してください。
+
 zshが5.1より古いとpowerlevel10kが動かないので
 
 ```sh

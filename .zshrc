@@ -180,4 +180,8 @@ esac
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+# Avoid competing rehash processes when terminals start at the same time.
+# Run `pyenv rehash` manually after adding Python executables if needed.
+if command -v pyenv > /dev/null 2>&1; then
+  eval "$(pyenv init - --no-rehash zsh)"
+fi

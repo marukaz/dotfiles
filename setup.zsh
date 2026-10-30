@@ -102,9 +102,9 @@ done
 
 echo "Linking dotfiles ..."
 for f in .gitconfig .gitconfig_work .gitignore_global .p10k.zsh .tmux.conf \
-         .zpreztorc .zshrc .vscode/settings.json; do
+         .zprofile .zpreztorc .zshrc .vscode/settings.json; do
   target_path="$HOME/$f"
-  if [[ "$f" = .zshrc || "$f" = .zpreztorc || "$f" = .p10k.zsh ]]; then
+  if [[ "$f" = .zprofile || "$f" = .zshrc || "$f" = .zpreztorc || "$f" = .p10k.zsh ]]; then
     target_path="${ZDOTDIR:-$HOME}/$f"
   fi
   link_dotfile "$DOTPATH/$f" "$target_path"
